@@ -28,7 +28,7 @@ for(const lang of cfg.languages){
  const adjustedMeta=meta.replace('href="public.css"','href="'+(lang!=='ko'&&!/<base\b/i.test(html)?'../':'')+'public.css"');
  html=html.replace(/<\/head>/i,adjustedMeta+'</head>');
  html=completeTracking(html);
- fs.writeFileSync(file,html);
+ fs.writeFileSync(file,html.trimEnd()+'\n');
 }
 fs.writeFileSync(path.join(out,'public.css'),'a[href="https://nanalab.kr/apps/"]{position:fixed!important;right:14px!important;bottom:12px!important;z-index:30!important;color:#888!important;font:11px/1.4 system-ui,sans-serif!important;letter-spacing:0!important;text-decoration:none!important;background:none!important;border:0!important;padding:3px!important;box-shadow:none!important}a[href="https://nanalab.kr/apps/"]:focus-visible{outline:2px solid #888;outline-offset:3px}@media print{a[href="https://nanalab.kr/apps/"]{display:none!important}}\n');
 fs.writeFileSync(path.join(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+cfg.languages.map(l=>'<url><loc>'+cfg.url+(l==='ko'?'':l+'/')+'</loc></url>').join('\n')+'\n</urlset>\n');
