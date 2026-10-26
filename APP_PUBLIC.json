@@ -1,0 +1,59 @@
+{
+  "slug": "filename-studio",
+  "url": "https://nanalab.kr/filename-studio/",
+  "languages": [
+    "ko",
+    "en",
+    "es",
+    "zh",
+    "ja",
+    "de"
+  ],
+  "locales": {
+    "ko": {
+      "name": "파일명 규칙 미리보기",
+      "description": "파일명 변경 규칙과 충돌을 미리 확인하고 이름을 바꾼 복사본 ZIP과 매핑 CSV를 저장하세요.",
+      "image_alt": "파일명 규칙 미리보기"
+    },
+    "en": {
+      "name": "Filename Studio",
+      "description": "Preview filename rules and conflicts, then export renamed copies as a ZIP with a mapping CSV.",
+      "image_alt": "Filename Studio"
+    },
+    "es": {
+      "name": "Estudio de nombres de archivo",
+      "description": "Previsualiza reglas y conflictos de nombres y exporta copias renombradas en ZIP con un CSV de correspondencias.",
+      "image_alt": "Estudio de nombres de archivo"
+    },
+    "zh": {
+      "name": "文件名规则预览",
+      "description": "预览文件命名规则与冲突，并将重命名后的副本导出为 ZIP 和名称映射 CSV。",
+      "image_alt": "文件名规则预览"
+    },
+    "ja": {
+      "name": "ファイル名ルールのプレビュー",
+      "description": "ファイル名の変更ルールと重複を確認し、変更後のコピーをZIPと対応表CSVで保存できます。",
+      "image_alt": "ファイル名ルールのプレビュー"
+    },
+    "de": {
+      "name": "Dateinamen-Werkstatt",
+      "description": "Prüfen Sie Namensregeln und Konflikte und exportieren Sie umbenannte Kopien als ZIP mit Zuordnungs-CSV.",
+      "image_alt": "Dateinamen-Werkstatt"
+    },
+    "fr": {
+      "name": "Atelier de noms de fichiers",
+      "description": "Prévisualisez les règles de nommage et les conflits, puis exportez les copies renommées en ZIP avec un CSV de correspondance.",
+      "image_alt": "Atelier de noms de fichiers"
+    },
+    "pt": {
+      "name": "Estúdio de nomes de arquivos",
+      "description": "Confira regras e conflitos de nomes e exporte cópias renomeadas em ZIP com um CSV de correspondência.",
+      "image_alt": "Estúdio de nomes de arquivos"
+    },
+    "ru": {
+      "name": "Мастерская имён файлов",
+      "description": "Проверьте правила переименования и конфликты, затем сохраните переименованные копии в ZIP и таблицу соответствий CSV.",
+      "image_alt": "Мастерская имён файлов"
+    }
+  }
+}

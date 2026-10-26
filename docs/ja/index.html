@@ -1,0 +1,78 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>ファイル名ルールのプレビュー · NaNa Lab</title><link rel="stylesheet" href="style.css">
+<meta name="robots" content="index,follow">
+<meta name="description" content="ファイル名の変更ルールと重複を確認し、変更後のコピーをZIPと対応表CSVで保存できます。">
+<link rel="canonical" href="https://nanalab.kr/filename-studio/ja/">
+<link rel="alternate" hreflang="ko" href="https://nanalab.kr/filename-studio/">
+<link rel="alternate" hreflang="en" href="https://nanalab.kr/filename-studio/en/">
+<link rel="alternate" hreflang="es" href="https://nanalab.kr/filename-studio/es/">
+<link rel="alternate" hreflang="zh" href="https://nanalab.kr/filename-studio/zh/">
+<link rel="alternate" hreflang="ja" href="https://nanalab.kr/filename-studio/ja/">
+<link rel="alternate" hreflang="de" href="https://nanalab.kr/filename-studio/de/">
+<link rel="alternate" hreflang="x-default" href="https://nanalab.kr/filename-studio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nanalab.kr/filename-studio/ja/">
+<meta property="og:title" content="ファイル名ルールのプレビュー">
+<meta property="og:description" content="ファイル名の変更ルールと重複を確認し、変更後のコピーをZIPと対応表CSVで保存できます。">
+<meta property="og:image" content="https://nanalab.kr/filename-studio/og/ja.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ファイル名ルールのプレビュー">
+<meta name="twitter:description" content="ファイル名の変更ルールと重複を確認し、変更後のコピーをZIPと対応表CSVで保存できます。">
+<meta name="twitter:image" content="https://nanalab.kr/filename-studio/og/ja.jpg">
+<link rel="stylesheet" href="public.css">
+
+<!-- NaNa publisher: AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9767176956440077"
+        crossorigin="anonymous"></script>
+<!-- /NaNa publisher: AdSense -->
+<!-- NaNa publisher: GTM -->
+<script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })
+            (window, document, 'script', 'dataLayer', 'GTM-NV2WWQXB');
+    </script>
+<!-- /NaNa publisher: GTM -->
+<!-- NaNa publisher: Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZYSF0173P"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2ZYSF0173P');
+    </script>
+<!-- /NaNa publisher: Analytics -->
+</head><body>
+<!-- NaNa publisher: GTM fallback -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NV2WWQXB" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+<!-- /NaNa publisher: GTM fallback -->
+<header><a class="brand" href="./">f<span>n</span> / STUDIO</a><nav aria-label="言語" class="languages"><a href="./" lang="ko" >한국어</a> <a href="en/" lang="en" >English</a> <a href="es/" lang="es" >Español</a> <a href="zh/" lang="zh" >简体中文</a> <a href="ja/" lang="ja" aria-current="page">日本語</a> <a href="de/" lang="de" >Deutsch</a></nav></header><main><section class="intro"><p class="eyebrow">名前を整える小さな作業台</p><h1>ファイル名を整然と。<br><span>元のファイルはそのまま。</span></h1><p>置換・日付・連番を組み合わせ、重複を確認。新しい名前のコピーを ZIP と対応表で保存します。</p></section><div class="workspace"><section class="panel"><div class="section-title"><h2><b>01</b>ファイルの取り込み</h2><button class="text-button" id="example">サンプルを読み込む</button></div><label class="drop"><strong>ファイルを選択</strong><span>最大300個 · 各50 MiB · 合計100 MiB</span><input id="files" type="file" multiple aria-label="ファイルを選択"></label><p id="fileStatus" class="muted"></p><details><summary>ファイル名だけ貼り付け</summary><p class="muted">1行に1つ。このモードでは CSV のみ保存できます。</p><label>ファイル名一覧<textarea id="names" rows="5" maxlength="100000"></textarea></label><button id="useNames" class="secondary">一覧を使用</button></details><div class="section-title rule-title"><h2><b>02</b>名前のルール</h2><button class="text-button" id="reset">ルールをリセット</button></div><div class="grid"><label>検索文字<input id="find" type="text" maxlength="300" placeholder="文字列をそのまま検索"></label><label>置換文字<input id="replace" type="text" maxlength="300"></label><label>接頭辞<input id="prefix" type="text" maxlength="300"></label><label>接尾辞<input id="suffix" type="text" maxlength="300"></label><label>日付を追加<input id="date" type="date" min="1900-01-01" max="2099-12-31"></label><label class="check"><input id="keepExt" type="checkbox" checked>拡張子を保持</label></div><div class="number-box"><label class="check"><input id="number" type="checkbox" checked>連番を追加</label><div class="grid"><label>開始番号<input id="start" type="number" min="0" max="999999999" value="1"></label><label>番号の桁数<input id="pad" type="number" min="1" max="10" value="3"></label></div></div><p class="muted small">順序：本体の置換 → 接頭辞・接尾辞 → 日付 → 番号 → 拡張子。最後の点以降を拡張子とします。選択順で連番を付けます。</p></section><section class="panel preview"><div class="section-title"><h2><b>03</b>結果プレビュー</h2><span id="count" class="pill"></span></div><div id="status" role="status" aria-live="polite"></div><div class="table-scroll"><table><thead><tr><th>元の名前</th><th>新しい名前 / 状態</th></tr></thead><tbody id="rows"></tbody></table></div><div class="actions"><button id="zip">コピー ZIP を保存</button><button id="csv" class="secondary">対応表 CSV</button></div><p class="muted small">ZIP は無圧縮です。内容は変更しません。日時・権限などのメタデータは保持しません。</p></section></div><details class="notes"><summary>使用範囲と参考資料</summary><p>ファイルはブラウザー内で処理します。アップロード・元ファイルの変更・自動保存は行いません。フォルダー階層は保持せず ZIP の直下に配置します。Windows の禁止文字・予約名と UTF-8 255バイトの上限を検査します。大文字小文字と NFC 正規化で同じ名前も重複と判定します。パス全体の制限は環境により異なります。</p><p>CSV は UTF-8 BOM 形式です。数式として解釈される可能性のある値に単一引用符を付けます。ZIP の名前は原文のままです。</p><p><a href="https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file" target="_blank" rel="noreferrer">Microsoft ファイル名の規則</a> · <a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" target="_blank" rel="noreferrer">PKWARE ZIP 仕様</a></p></details></main><footer><span>端末内で処理 · アップロードなし</span><a href="https://nanalab.kr/apps/">More Apps ↗</a></footer><script type="module" src="app.js"></script>
+<!-- NaNa publisher: Cloudflare fallback -->
+<script>
+(function () {
+  function ensureBeacon() {
+    // Cloudflare may inject its beacon at the edge. Reuse that script when present.
+    if (document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]')) return;
+    var beacon = document.createElement('script');
+    beacon.defer = true;
+    beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    beacon.setAttribute('data-cf-beacon', JSON.stringify({token: '9f3423bb0d034d91bbe1a12afeff2429'}));
+    document.head.appendChild(beacon);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ensureBeacon, {once: true});
+  else ensureBeacon();
+})();
+</script>
+<!-- /NaNa publisher: Cloudflare fallback -->
+</body></html>

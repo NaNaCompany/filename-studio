@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import {writeFileSync,mkdirSync} from 'node:fs';
+import {readFileSync,existsSync} from 'node:fs';
+import {catalogs,localError} from './dist/i18n.js';
+import {planNames,validateName,crc32,makeZip,csv,validateFiles} from './dist/core.js';
+let tests=0;const check=(name,fn)=>{fn();tests++;console.log('PASS',name);};
+check('literal replace preserves extensions and numbering',()=>assert.deepEqual(planNames(['초안.txt','초안.csv'],{find:'초안',replace:'최종',prefix:'팀_',date:'2026-10-26',number:true,start:7,pad:3}).map(r=>r.next),['팀_최종_2026-10-26_007.txt','팀_최종_2026-10-26_008.csv']));
+check('all literal matches, dotfile, multipart extension',()=>assert.deepEqual(planNames(['aa.aa.txt','.env','archive.tar.gz'],{find:'aa',replace:'x'}).map(r=>r.next),['x.x.txt','.env','archive.tar.gz']));
+check('collision case and Unicode normalization',()=>{assert.ok(planNames(['A.txt','a.txt']).every(r=>r.error));assert.ok(planNames(['é.txt','e\u0301.txt']).every(r=>r.error));});
+check('reserved and unsafe names',()=>{for(const n of ['CON.txt','com1','LPT².txt','a/b','..','a.','a ','a\u0000b','가'.repeat(86)])assert.ok(validateName(n),n);assert.equal(validateName('노트.txt'),'');});
+check('empty and bounds rejected',()=>{assert.throws(()=>planNames([]));assert.throws(()=>planNames(['a'],{date:'2026-02-30'}));assert.throws(()=>planNames(['a'],{start:-1}));assert.throws(()=>validateFiles([{size:51*1024*1024}]));});
+check('CRC32 independent standard vector',()=>assert.equal(crc32(new TextEncoder().encode('123456789')),0xcbf43926));
+check('CSV quotes and formula protection',()=>{const out=csv([{old:'=cmd',next:'a,"b.txt',error:''}]);assert.ok(out.includes('"\'=cmd"'));assert.ok(out.includes('"a,""b.txt"'));});
+const files=[new File(['hello\n'],'old.txt'),new File([new Uint8Array([0,1,255])],'old.bin'),new File([],'empty.txt')];
+const names=['한글.txt','binary.bin','empty.txt'];const rows=names.map((next,i)=>({old:files[i].name,next,error:''}));
+mkdirSync('artifacts',{recursive:true});writeFileSync('artifacts/fixture.zip',new Uint8Array(await (await makeZip(files,rows)).arrayBuffer()));
+await assert.rejects(()=>makeZip(files,[...rows.slice(0,2),{...rows[2],next:'binary.bin'}]));tests++;console.log('PASS ZIP fixture written and duplicate rejected');
+console.log(`${tests} tests passed`);
+for(const lang of ['ko','en','es','zh','ja','de']){
+const file=lang==='ko'?'dist/index.html':`dist/${lang}/index.html`;
+assert.ok(existsSync(file));const html=readFileSync(file,'utf8');
+assert.ok(html.includes(`lang="${lang}"`));assert.ok(html.includes('noindex,nofollow'));
+assert.equal((html.match(/aria-current="page"/g)||[]).length,1);
+assert.equal((html.match(/lang="(ko|en|es|zh|ja|de)"/g)||[]).length,7);
+assert.ok(html.includes(lang==='ko'?'<base href="./">':'<base href="../">'));
+assert.equal(Object.keys(catalogs[lang]).length,Object.keys(catalogs.ko).length);
+assert.ok(localError('금지 문자 포함',lang)===catalogs[lang].forbidden);
+assert.ok(localError('원본: Windows 예약 이름 / 중복 이름 (대소문자·유니코드 정규화 포함)',lang).includes(catalogs[lang].reserved));
+if(lang!=='ko')assert.ok(!/[가-힣]/u.test(localError('원본: Windows 예약 이름 / 중복 이름 (대소문자·유니코드 정규화 포함)',lang)));
+}
+console.log('PASS six routes, switchers, base assets, catalog parity and localized validation');

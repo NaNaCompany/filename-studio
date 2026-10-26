@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="../"><title>文件名规则预览 · NaNa Lab</title><link rel="stylesheet" href="style.css">
+<meta name="robots" content="index,follow">
+<meta name="description" content="预览文件命名规则与冲突，并将重命名后的副本导出为 ZIP 和名称映射 CSV。">
+<link rel="canonical" href="https://nanalab.kr/filename-studio/zh/">
+<link rel="alternate" hreflang="ko" href="https://nanalab.kr/filename-studio/">
+<link rel="alternate" hreflang="en" href="https://nanalab.kr/filename-studio/en/">
+<link rel="alternate" hreflang="es" href="https://nanalab.kr/filename-studio/es/">
+<link rel="alternate" hreflang="zh" href="https://nanalab.kr/filename-studio/zh/">
+<link rel="alternate" hreflang="ja" href="https://nanalab.kr/filename-studio/ja/">
+<link rel="alternate" hreflang="de" href="https://nanalab.kr/filename-studio/de/">
+<link rel="alternate" hreflang="x-default" href="https://nanalab.kr/filename-studio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nanalab.kr/filename-studio/zh/">
+<meta property="og:title" content="文件名规则预览">
+<meta property="og:description" content="预览文件命名规则与冲突，并将重命名后的副本导出为 ZIP 和名称映射 CSV。">
+<meta property="og:image" content="https://nanalab.kr/filename-studio/og/zh.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="文件名规则预览">
+<meta name="twitter:description" content="预览文件命名规则与冲突，并将重命名后的副本导出为 ZIP 和名称映射 CSV。">
+<meta name="twitter:image" content="https://nanalab.kr/filename-studio/og/zh.jpg">
+<link rel="stylesheet" href="public.css">
+
+<!-- NaNa publisher: AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9767176956440077"
+        crossorigin="anonymous"></script>
+<!-- /NaNa publisher: AdSense -->
+<!-- NaNa publisher: GTM -->
+<script>
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })
+            (window, document, 'script', 'dataLayer', 'GTM-NV2WWQXB');
+    </script>
+<!-- /NaNa publisher: GTM -->
+<!-- NaNa publisher: Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZYSF0173P"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-2ZYSF0173P');
+    </script>
+<!-- /NaNa publisher: Analytics -->
+</head><body>
+<!-- NaNa publisher: GTM fallback -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NV2WWQXB" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+<!-- /NaNa publisher: GTM fallback -->
+<header><a class="brand" href="./">f<span>n</span> / STUDIO</a><nav aria-label="语言" class="languages"><a href="./" lang="ko" >한국어</a> <a href="en/" lang="en" >English</a> <a href="es/" lang="es" >Español</a> <a href="zh/" lang="zh" aria-current="page">简体中文</a> <a href="ja/" lang="ja" >日本語</a> <a href="de/" lang="de" >Deutsch</a></nav></header><main><section class="intro"><p class="eyebrow">整理文件名的小工作台</p><h1>让文件名井然有序。<br><span>保留原始文件。</span></h1><p>组合替换、日期和序号，先检查重名，再导出改名副本 ZIP 与映射表。</p></section><div class="workspace"><section class="panel"><div class="section-title"><h2><b>01</b>导入文件</h2><button class="text-button" id="example">载入示例</button></div><label class="drop"><strong>选择文件</strong><span>最多 300 个 · 每个 50 MiB · 总计 100 MiB</span><input id="files" type="file" multiple aria-label="选择文件"></label><p id="fileStatus" class="muted"></p><details><summary>仅粘贴文件名列表</summary><p class="muted">每行一个文件名。列表模式只能导出 CSV。</p><label>文件名列表<textarea id="names" rows="5" maxlength="100000"></textarea></label><button id="useNames" class="secondary">使用列表</button></details><div class="section-title rule-title"><h2><b>02</b>命名规则</h2><button class="text-button" id="reset">重置规则</button></div><div class="grid"><label>查找文字<input id="find" type="text" maxlength="300" placeholder="按文字原样查找"></label><label>替换为<input id="replace" type="text" maxlength="300"></label><label>前缀<input id="prefix" type="text" maxlength="300"></label><label>后缀<input id="suffix" type="text" maxlength="300"></label><label>附加日期<input id="date" type="date" min="1900-01-01" max="2099-12-31"></label><label class="check"><input id="keepExt" type="checkbox" checked>保留扩展名</label></div><div class="number-box"><label class="check"><input id="number" type="checkbox" checked>附加序号</label><div class="grid"><label>起始编号<input id="start" type="number" min="0" max="999999999" value="1"></label><label>编号位数<input id="pad" type="number" min="1" max="10" value="3"></label></div></div><p class="muted small">顺序：替换主名 → 前后缀 → 日期 → 编号 → 扩展名。最后一个点后视为扩展名，按选择顺序编号。</p></section><section class="panel preview"><div class="section-title"><h2><b>03</b>结果预览</h2><span id="count" class="pill"></span></div><div id="status" role="status" aria-live="polite"></div><div class="table-scroll"><table><thead><tr><th>原始名称</th><th>新名称 / 状态</th></tr></thead><tbody id="rows"></tbody></table></div><div class="actions"><button id="zip">保存改名副本 ZIP</button><button id="csv" class="secondary">映射 CSV</button></div><p class="muted small">ZIP 不压缩。文件内容保持不变，不保留时间、权限等元数据。</p></section></div><details class="notes"><summary>使用范围与参考资料</summary><p>文件仅在浏览器内处理，不上传、不修改原件、不自动保存。文件放入 ZIP 根目录，不保留文件夹层级。检查 Windows 保留名称、禁用字符以及 UTF-8 255 字节上限。忽略大小写及 NFC 规范化后相同的名称也视为冲突。完整路径限制因设备而异。</p><p>CSV 使用 UTF-8 BOM，对可能作为公式解释的值添加前导单引号。ZIP 文件名保留原文。</p><p><a href="https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file" target="_blank" rel="noreferrer">Microsoft 文件命名规则</a> · <a href="https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT" target="_blank" rel="noreferrer">PKWARE ZIP 规范</a></p></details></main><footer><span>设备内处理 · 无上传</span><a href="https://nanalab.kr/apps/">More Apps ↗</a></footer><script type="module" src="app.js"></script>
+<!-- NaNa publisher: Cloudflare fallback -->
+<script>
+(function () {
+  function ensureBeacon() {
+    // Cloudflare may inject its beacon at the edge. Reuse that script when present.
+    if (document.querySelector('script[src*="static.cloudflareinsights.com/beacon.min.js"]')) return;
+    var beacon = document.createElement('script');
+    beacon.defer = true;
+    beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    beacon.setAttribute('data-cf-beacon', JSON.stringify({token: '9f3423bb0d034d91bbe1a12afeff2429'}));
+    document.head.appendChild(beacon);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ensureBeacon, {once: true});
+  else ensureBeacon();
+})();
+</script>
+<!-- /NaNa publisher: Cloudflare fallback -->
+</body></html>

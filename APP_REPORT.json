@@ -1,0 +1,64 @@
+{
+  "ideaId": "W007",
+  "slug": "filename-studio",
+  "title": "파일명 규칙 미리보기",
+  "ready": true,
+  "summary": "실제 로컬 파일의 이름 변경을 미리보고 충돌을 차단한 뒤 복사본 ZIP과 매핑 CSV를 저장하는 독립 정적 앱",
+  "features": [
+    "실제 파일 선택 및 이름 목록 입력",
+    "문자열 치환·접두사·접미사·명시적 날짜·일련번호·확장자 유지",
+    "대소문자/NFC 충돌과 금지·예약 이름 검사",
+    "UTF-8 ZIP 및 수식 해석 보호 CSV",
+    "즉시 실행 가능한 자체 예제 파일",
+    "360px 반응형 CSS·접근성 레이블·로컬 처리"
+  ],
+  "tests": [
+    {
+      "name": "node --check dist/core.js",
+      "pass": true
+    },
+    {
+      "name": "node --check dist/app.js",
+      "pass": true
+    },
+    {
+      "name": "node tests.mjs: 8 fixtures passed",
+      "pass": true
+    },
+    {
+      "name": "python -X utf8 check_zip.py: independent zipfile CRC/content/UTF-8 check passed",
+      "pass": true
+    },
+    {
+      "pass": true,
+      "name": "six routes, switchers, shared assets, locale catalog parity, localized errors"
+    }
+  ],
+  "limitations": [
+    "최대 300개, 개별 50 MiB, 합계 100 MiB",
+    "ZIP 무압축·폴더 계층 및 시간/권한 보존 제외",
+    "이름 목록 모드에서는 CSV만 제공",
+    "브라우저 시각 QA 미수행·소유자 담당"
+  ],
+  "sources": [
+    "https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file",
+    "https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT"
+  ],
+  "entry": "dist/index.html",
+  "languages": [
+    "ko",
+    "en",
+    "es",
+    "zh",
+    "ja",
+    "de"
+  ],
+  "languageRoutes": [
+    "/",
+    "/en/",
+    "/es/",
+    "/zh/",
+    "/ja/",
+    "/de/"
+  ]
+}
