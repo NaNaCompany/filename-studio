@@ -1,3 +1,12 @@
+
+// Shared book banner adapter: campaign and appearance are maintained in src_cdn.
+function addSharedBookBanner(value) {
+  if (typeof value !== 'string' || !/^\s*(?:<!doctype\s+html|<html\b)/i.test(value) || value.includes('https://nanalab.kr/src_cdn/banner/astra.js')) return value;
+  const snippet = "<!-- NaNa shared book banner --><script defer src=\"https://nanalab.kr/src_cdn/banner/astra.js\"></script><!-- /NaNa shared book banner -->";
+  if (/<head\b[^>]*>/i.test(value)) return value.replace(/<head\b[^>]*>/i, opening => opening + snippet);
+  for (const closing of [/<\/body\s*>/i, /<\/html\s*>/i]) if (closing.test(value)) return value.replace(closing, () => snippet + value.match(closing)[0]);
+  return value + snippet;
+}
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -13,7 +22,7 @@ const appJs=path.join(out,'app.js');
 if(cfg.slug==='nocturne-library'){
  let js=fs.readFileSync(appJs,'utf8');
  js=js.replace("history.pushState({reader:id},'',`#read/${id}`)","history.pushState({reader:id},'',location.pathname+location.search+`#read/${id}`)");
- fs.writeFileSync(appJs,js);
+ fs.writeFileSync(appJs,addSharedBookBanner((js)));
 }
 const links=cfg.languages.map(l=>`<link rel="alternate" hreflang="${l}" href="${cfg.url+(l==='ko'?'':l+'/')}">`).join('\n')+`\n<link rel="alternate" hreflang="x-default" href="${cfg.url}">`;
 for(const lang of cfg.languages){
@@ -28,10 +37,10 @@ for(const lang of cfg.languages){
  const adjustedMeta=meta.replace('href="public.css"','href="'+(lang!=='ko'&&!/<base\b/i.test(html)?'../':'')+'public.css"');
  html=html.replace(/<\/head>/i,adjustedMeta+'</head>');
  html=completeTracking(html);
- fs.writeFileSync(file,html.trimEnd()+'\n');
+ fs.writeFileSync(file,addSharedBookBanner((html.trimEnd()+'\n')));
 }
-fs.writeFileSync(path.join(out,'public.css'),'a[href="https://nanalab.kr/apps/"]{position:fixed!important;right:14px!important;bottom:12px!important;z-index:30!important;color:#888!important;font:11px/1.4 system-ui,sans-serif!important;letter-spacing:0!important;text-decoration:none!important;background:none!important;border:0!important;padding:3px!important;box-shadow:none!important}a[href="https://nanalab.kr/apps/"]:focus-visible{outline:2px solid #888;outline-offset:3px}@media print{a[href="https://nanalab.kr/apps/"]{display:none!important}}\n');
-fs.writeFileSync(path.join(out,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+cfg.languages.map(l=>'<url><loc>'+cfg.url+(l==='ko'?'':l+'/')+'</loc></url>').join('\n')+'\n</urlset>\n');
-fs.writeFileSync(path.join(out,'robots.txt'),'User-agent: *\nAllow: /\nSitemap: '+cfg.url+'sitemap.xml\n');
-fs.writeFileSync(path.join(out,'.nojekyll'),'');
+fs.writeFileSync(path.join(out,'public.css'),addSharedBookBanner(('a[href="https://nanalab.kr/apps/"]{position:fixed!important;right:14px!important;bottom:12px!important;z-index:30!important;color:#888!important;font:11px/1.4 system-ui,sans-serif!important;letter-spacing:0!important;text-decoration:none!important;background:none!important;border:0!important;padding:3px!important;box-shadow:none!important}a[href="https://nanalab.kr/apps/"]:focus-visible{outline:2px solid #888;outline-offset:3px}@media print{a[href="https://nanalab.kr/apps/"]{display:none!important}}\n')));
+fs.writeFileSync(path.join(out,'sitemap.xml'),addSharedBookBanner(('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+cfg.languages.map(l=>'<url><loc>'+cfg.url+(l==='ko'?'':l+'/')+'</loc></url>').join('\n')+'\n</urlset>\n')));
+fs.writeFileSync(path.join(out,'robots.txt'),addSharedBookBanner(('User-agent: *\nAllow: /\nSitemap: '+cfg.url+'sitemap.xml\n')));
+fs.writeFileSync(path.join(out,'.nojekyll'),addSharedBookBanner(('')));
 console.log(JSON.stringify({slug:cfg.slug,languages:cfg.languages.length,output:'docs'}));
